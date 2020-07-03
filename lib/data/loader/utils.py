@@ -51,12 +51,13 @@ def make(config, model, type, subset_indices = None, inshop_type = None):
             ds,
             # ignore batch_size, since batch_sampler enabled
             **{k: _c[k] for k in _c if k != 'batch_size'},
-            batch_size = -1,
+            batch_size = 1, # https://github.com/ultralytics/yolov3/issues/231
             batch_sampler = ClassBalancedSampler(
                 ds,
                 batch_size = config['dataloader']['batch_size'],
                 num_samples_per_class = 4
-            )
+            ),
+            sampler=None # https://github.com/ultralytics/yolov3/issues/231
         )
     else:
         # else init or eval loader
@@ -91,5 +92,6 @@ def merge(dls_non_iter):
                 # initialize new dataloader in case no batches left
                 dls[i] = iter(dls_non_iter[i])
                 b = next(dls[i])
-            yield b, dls[i].dataset
+            yield b, dls[i]._dataset  # pytorch 1.4
+            # yield b, dls[i]._dataset # original snippet
 
