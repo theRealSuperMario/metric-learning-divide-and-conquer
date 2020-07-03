@@ -128,7 +128,6 @@ def train_kmeans(x, num_clusters=1000, gpu_ids=None, niter=100, nredo=1, verbose
     # perform the training
     kmeans.train(x, index)
     centroids = faiss.vector_float_to_array(kmeans.centroids)
-
     objective = faiss.vector_float_to_array(kmeans.obj)
     #logging.debug("Final objective: %.4g" % objective[-1])
 
@@ -273,4 +272,6 @@ def test_knn_search(size=10000, gpu_id=None):
 
 if __name__ == '__main__':
     #example(size=100000, k=3, num_pca_components=32)
-    test_knn_search(size=100000, gpu_id=5)
+    test_knn_search(size=100000, gpu_id=0)
+    x = np.random.rand(1000, 100).astype(np.float32)
+    train_kmeans(x, num_clusters=10, gpu_ids=[0], niter=100, nredo=1, verbose=0)
