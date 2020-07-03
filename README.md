@@ -20,6 +20,17 @@ We also applied our method to the [Humpback Whale Identification Challenge](http
 - Faiss with GPU support ([Faiss](https://github.com/facebookresearch/faiss))
 - download and extract the datasets for [In-Shop Clothes](http://mmlab.ie.cuhk.edu.hk/projects/DeepFashion/InShopRetrieval.html), [Stanford Online Products](http://cvgl.stanford.edu/projects/lifted_struct/) and [PKU VehicleID](https://www.pkuml.org/resources/pku-vehicleid.html)
 
+- The code depends on the correct Faiss version which was available at the time of publication
+- working configuration:
+```
+torch==1.4.0
+torchvision==0.5.0
+cuda==10.0
+faiss==1.5.2
+```
+- a higher faiss version has a slightly different interface, which breaks the `lib.faissext.py` code.
+- this can be tested by `python lib/faisext.py`. This runs a small test to see if the interface is correct.
+
 ## Usage
 
 The following command will train the model with Margin loss on the In-Shop Clothes dataset for 200 epochs and a batch size of 80 while splitting the embedding layer with 8 clusters and finetuning the model from epoch 190 on. You can use this command to reproduce the results of the paper for the three datasets by changing simply `--dataset=inshop` to `--dataset=sop` (Stanford Online Products) or `--dataset=vid` (Vehicle-ID).
