@@ -25,8 +25,13 @@ We also applied our method to the [Humpback Whale Identification Challenge](http
 ```
 torch==1.4.0
 torchvision==0.5.0
-cuda==10.0
+cudatoolkit==10.0
 faiss==1.5.2
+```
+
+- conda command
+```
+conda install pytorch torchvision faiss-gpu==1.5.2 cudatoolkit=10.0 -c pytorch
 ```
 - a higher faiss version has a slightly different interface, which breaks the `lib.faissext.py` code.
 - this can be tested by `python lib/faisext.py`. This runs a small test to see if the interface is correct.
